@@ -1,2 +1,3 @@
-EMAIL = '9zcci@vmani.com'
+EMAIL = 'lafyatospo@nedoz.com'
 PASSWORD = '23*56*89'
+
