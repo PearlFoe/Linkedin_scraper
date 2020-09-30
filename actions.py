@@ -43,7 +43,5 @@ def login(driver, email=None, password=None):
 
 	element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "profile-nav-item")))
 
-
 def logout(driver):
 	driver.get('https://www.linkedin.com/m/logout/')
-

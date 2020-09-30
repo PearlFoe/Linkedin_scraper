@@ -1,16 +1,48 @@
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium import webdriver
 from user_scraper import Person
 import actions
 import config
 import time
 
-url = 'https://ru.linkedin.com/in/tayapopova/'
+
+def get_url(file_name):
+	url_list = []
+	with open(file_name, 'r') as f:
+		data = f.read()
+		url_list = [url for url in data.split('\n')]
+	for url in url_list:
+		yield url
+
 
 def main():
 	driver = webdriver.Chrome()
+	act = ActionChains(driver)
 	actions.login(driver=driver, email=config.EMAIL, password=config.PASSWORD)
-	time.sleep(15)
+	act.pause(2).perform()
 
+	start_time = time.time()
+	counter = 0
+
+	for url in get_url('linkedin_urls.txt'):
+		person = Person(url=url, driver=driver)
+		actions.scroll_to_bottom(driver)
+		data = {
+			'name':person.get_name(),
+			'url':person.url,
+			'position':person.get_position(),
+			#'company_name':person.get_company_name(),
+			'region':person.get_region(),
+			'photo_url':person.get_photo(),
+			'education':person.get_education()
+		}
+		counter += 1
+		print()
+		print(data)
+
+	print()
+	print((time.time() - start_time)/counter)
+	a = input('\n----Press any key to exit----')
 	actions.logout(driver=driver)
 	driver.close()
 
