@@ -58,7 +58,6 @@ class Person(object):
 		actions = ActionChains(driver)
 		try:
 			_ = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//*[@class="pv-top-card__photo-wrapper ml0"]')))
-			actions.pause(1).perform()
 			photo = driver.find_element_by_xpath(f'//*[@title="{self.get_name()}"]').get_attribute('src')
 			
 			if 'http' not in photo:

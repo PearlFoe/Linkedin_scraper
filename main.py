@@ -42,7 +42,7 @@ def main():
 	print()
 	print(f'number of times: {counter}')
 	print(f'time: {(time.time() - start_time)/counter}')
-
+	
 	a = input('\n----Press any key to exit----\n')
 	actions.logout(driver=driver)
 	driver.close()
