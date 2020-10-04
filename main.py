@@ -23,7 +23,7 @@ def main():
 
 	start_time = time.time()
 	counter = 0
-
+	
 	for url in get_url('linkedin_urls.txt'):
 		person = Person(url=url, driver=driver)
 		actions.scroll_to_bottom(driver)
@@ -31,7 +31,6 @@ def main():
 			'name':person.get_name(),
 			'url':person.url,
 			'position':person.get_position(),
-			#'company_name':person.get_company_name(),
 			'region':person.get_region(),
 			'photo_url':person.get_photo(),
 			'education':person.get_education()
@@ -41,8 +40,10 @@ def main():
 		print(data)
 
 	print()
-	print((time.time() - start_time)/counter)
-	a = input('\n----Press any key to exit----')
+	print(f'number of times: {counter}')
+	print(f'time: {(time.time() - start_time)/counter}')
+
+	a = input('\n----Press any key to exit----\n')
 	actions.logout(driver=driver)
 	driver.close()
 

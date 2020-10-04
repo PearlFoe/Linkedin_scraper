@@ -41,23 +41,6 @@ class Person(object):
 			return position
 		except Exception:
 			return ''
-	'''
-	def get_company_name(self):
-		driver = self.driver
-		try:
-			_ = WebDriverWait(driver, 1).until(EC.presence_of_element_located(
-													(By.ID, 'ember101')))
-			company_name = driver.find_element_by_id(
-													'ember101').text
-			return company_name
-		except Exception:
-			try:
-				company_name = driver.find_element_by_xpath(
-													'//*[class="mt1 t-18 t-black t-normal break-words"]').text
-				return company_name
-			except Exception:
-				return ''
-	'''
 
 	def get_region(self):
 		driver = self.driver
@@ -86,39 +69,27 @@ class Person(object):
 
 	def get_education(self):
 		driver = self.driver
-		education = dict()
+		education = []
 		try:
 			_ = WebDriverWait(driver, 1).until(EC.presence_of_element_located(
 												(By.ID, 'education-section')))
-			education_place = driver.find_elements_by_xpath(
-												'//*[@class="pv-entity__summary-info pv-entity__summary-info--background-section"]')
-			for place in education_place:
-				education_place = place.find_element_by_xpath('//*[@class="pv-entity__degree-info"]').find_elements_by_tag_name('h3').text
+			education_places = driver.find_elements_by_class_name(
+												"pv-entity__degree-info")
+			for place in education_places:
+				univercity = place.find_element_by_tag_name('h3').text
+				try:
+					professions = driver.find_element_by_class_name(
+														"pv-entity__degree-info").find_elements_by_tag_name('p')
+					profession_list = [prof.find_element_by_class_name('pv-entity__comma-item').text for prof in professions]
+				except Exception:
+					profession_list = []
 
-				professions = driver.find_element_by_xpath(
-													'//*[@class="pv-entity__degree-info"]').find_elements_by_tag_name('p')
-
-				education[education_place] = [prof.find_element_by_class_name('pv-entity__comma-item').text for prof in professions]
-
-			return education
-		except Exception:
-			return ''
-
-
-
-'''		try:
-			_ = WebDriverWait(driver, 1).until(EC.presence_of_element_located(
-												(By.XPATH, '//*[@class="pv-entity__school-name t-16 t-black t-bold"]')))
-			education_place = driver.find_element_by_xpath(
-												'//*[@class="pv-entity__school-name t-16 t-black t-bold"]').text
-
-			education['education_place'] = education_place
-			professions = driver.find_element_by_xpath(
-												'//*[@class="pv-entity__degree-info"]').find_elements_by_tag_name('p')
-
-			education['profession'] = [prof.find_element_by_class_name('pv-entity__comma-item').text for prof in professions]
+				education.append({
+							'education_place':univercity, 
+							'professions':profession_list
+					})
 
 			return education
 		except Exception:
 			return ''
-'''
+

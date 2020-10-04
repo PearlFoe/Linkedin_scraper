@@ -1,2 +1,2 @@
-EMAIL = 'lafyatospo@nedoz.com'
+EMAIL = 'yilmobesta@nedoz.com'
 PASSWORD = '23*56*89'
